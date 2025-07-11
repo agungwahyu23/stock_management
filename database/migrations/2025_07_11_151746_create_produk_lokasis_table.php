@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('product_location', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id', false)->nullable();
-            $table->integer('location_id', false)->nullable();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('location_id')->constrained()->onDelete('cascade');
             $table->integer('stock', false)->default(0)->nullable();
             $table->timestamps();
         });
