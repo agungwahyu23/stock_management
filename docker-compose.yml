@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+    image: laravel-stock-app
+    container_name: laravel_app
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/var/www
+    networks:
+      - laravel
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_laravel
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - laravel
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_laravel
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge
