@@ -85,6 +85,32 @@ php artisan serve
 Server berjalan di: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
+## 🚀 Menjalankan Project dengan Docker
+
+1. **Clone Repository**
+```bash
+git clone https://github.com/username/laravel-stock-app.git
+cd laravel-stock-app
+```
+
+2. **Copy .env**
+```bash
+cp .env.example .env
+```
+3. **Jalankan Docker**
+```bash
+docker-compose up -d --build
+```
+4. **Jalankan migrasi (opsional)**
+```bash
+docker exec -it laravel_app bash
+php artisan migrate
+```
+5. **Akses di browser**
+```bash
+http://localhost:8000
+```
+---
 
 ## 🔐 Autentikasi
 
