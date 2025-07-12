@@ -25,14 +25,21 @@ class ProductLocationController extends Controller
             return response()->json(['message' => 'Relation already exists'], 409);
         }
 
-        DB::table('product_location')->insert([
+        $insert = DB::table('product_location')->insertGetId([
             'product_id' => $data['product_id'],
             'location_id' => $data['location_id'],
             'stock' => $data['stock'],
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $product_location = DB::table('product_location')->where('id', $insert)->first();
 
-        return response()->json(['message' => 'Product assigned to location'], 201);
+        $response = [
+            'status' => 'success',
+            'message' => 'Product assigned to location.',
+            'data' => $product_location,
+        ];
+
+        return response()->json($response, 201);
     }
 }

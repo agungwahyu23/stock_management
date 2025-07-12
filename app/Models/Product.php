@@ -13,8 +13,13 @@ class Product extends Model
         'unit',
     ];
 
-    public function location() 
+    public function locations() 
     {
-        return $this->belongsToMany(Location::class, 'product_location')->withPivot('stock');    
+        return $this->belongsToMany(Location::class, 'product_location')->withPivot('stock')->withTimestamps();    
+    }
+
+    public function mutations()
+    {
+        return $this->hasManyThrough(Mutation::class, ProdukLokasi::class);
     }
 }
